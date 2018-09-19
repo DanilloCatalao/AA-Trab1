@@ -26,21 +26,11 @@ int LinearSelection( int* list, int n, int k ){
     }
 
     for(i = 0; i < group_count; i++) {
-	groups[i] = (int *) malloc(5 * sizeof(int));
-	if(groups[i] == NULL) {
-	    printf("Dynamic memory allocation error.\n");
-	    exit(-1);
-	}
-    }
-
-    for(i = 0; i < n; i++) {
-	groups[i/5][i%5] = list[i];
-    }
-
-    for(i = 0; i < group_count; i++) {
+	groups[i] = &list[i * 5];
 	merge_sort(groups[i], 5);
     }
 
+    free(groups);
     return 0;
 }
 
