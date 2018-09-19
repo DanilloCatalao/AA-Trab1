@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "linearSelection.h"
+#include "selection.h"
 #include "mergesort.h"
 
 int LinearSelection( int* list, int n, int k ){
@@ -25,6 +25,7 @@ int LinearSelection( int* list, int n, int k ){
      for(i = 0; i < group_count-1; i++) {
 	groups[i] = &list[i * 5];
 	merge_sort(groups[i], 5);
+	medians[i] = list[(i*5)+3];
      }
      groups[group_count-1] = &list[(group_count-1)*5];
      merge_sort(groups[group_count-1], n % 5);

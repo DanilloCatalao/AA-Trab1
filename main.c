@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "linearSelection.h"
+#include "selection.h"
 #include "mergesort.h"
 
 
