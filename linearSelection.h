@@ -1,2 +1,2 @@
 
-int LinearSelection( int* list, int k );
+int LinearSelection( int* list, int n, int k );
