@@ -64,18 +64,3 @@ static int *merge(int *list1, int n1, int *list2, int n2) {
     return result;
 }
 
-static void debug_show(int *list, int n) {
-    int i;
-    for(i = 0; i < n; i ++) {
-	printf("%d ", list[i]);
-    }
-    printf("\n");
-}
-
-int main() {
-    int list[] = {5, 3, 0, 7, 1, 2, 9, 4, 6, 8};
-    merge_sort(list, 10);
-    debug_show(list, 10);
-    return 0;
-}
-
