@@ -5,18 +5,18 @@
 #include "helper.h"
 
 int LinearSelection( int* list, int n, int k ){
-    //Group the numbers into sets of 5
     const int group_length = 5;
     int group_count;
     int medianOfMedians;
-    int i, remainder;
+    int i, j, w, remainder;
     int *median_list, *above_median_list, *below_median_list;
     int **groups;
+    int result;
 
     // Caso base
     if(n <= group_length) {
 	merge_sort(list, n);
-
+	k -= 1;
 	return list[k];
     }
 
@@ -28,6 +28,7 @@ int LinearSelection( int* list, int n, int k ){
     groups = (int **) _malloc(group_count * sizeof(int*));
     median_list = (int *) _malloc(group_count * sizeof(int));
 
+    //Group the numbers into sets of 5
     //Sort individual groups and find the median of each group; put these medians in a set M
     for(i = 0; i < group_count-1; i++) {
 	groups[i] = &list[i * group_length];
@@ -42,14 +43,36 @@ int LinearSelection( int* list, int n, int k ){
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
     medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
 
-    //Partition original data around m’ such that values less than it are in set L and values greater than it are in set R
-    //If sizeof(L) = k-1 return m'
-    //If sizeof(L) > k-1 retun LinearSelection()
-    
-    free(median_list);
-    free(groups);
+    above_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
+    below_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
 
-    return 0;
+    //Partition original data around m’ such that values less than it are in set L and values greater than it are in set R
+    j = 0;
+    w = 0;
+    for(i = 0; i < n; i++) {
+	if(list[i] < medianOfMedians) {
+	    below_median_list[j] = list[i];
+	    j++;
+	} else if(list[i] > medianOfMedians){
+	    above_median_list[w] = list[i];
+	    w++;
+	}
+    }
+
+    if(j == k - 1) {
+	result = medianOfMedians;
+    } else if(j > k - 1) {
+	result = LinearSelection(below_median_list, j, k);
+    } else {
+	result = LinearSelection(above_median_list, w, k - j - 1);
+    }
+    
+    free(groups);
+    free(median_list);
+    free(above_median_list);
+    free(below_median_list);
+
+    return result;
 }
 
 int sortSelection(int *list, int n, int k) {
