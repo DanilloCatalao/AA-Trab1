@@ -5,22 +5,22 @@
 
 int LinearSelection( int* list, int n, int k ){
     //Group the numbers into sets of 5
+    const int group_length = 5;
     int group_count;
     int medianOfMedians;
     int i, remainder;
     int *median_list;
-    int median;
     int **groups;
 
     // Caso base
-    if(n == 5 && k == 2) {
+    if(n <= group_length) {
 	merge_sort(list, n);
 
-	return list[2];
+	return list[k];
     }
 
-    group_count = n / 5;
-    if(n % 5 != 0) {
+    group_count = n / group_length;
+    if(n % group_length != 0) {
 	group_count += 1;
     }
 
@@ -38,16 +38,17 @@ int LinearSelection( int* list, int n, int k ){
 
     //Sort individual groups and find the median of each group; put these medians in a set M
     for(i = 0; i < group_count-1; i++) {
-	groups[i] = &list[i * 5];
-	merge_sort(groups[i], 5);
-	median_list[i] = groups[i][2];
+	groups[i] = &list[i * group_length];
+	merge_sort(groups[i], group_length);
+	median_list[i] = groups[i][group_length/2];
     }
-    remainder = n - (i * 5);
-    groups[group_count-1] = &list[(group_count-1)*5];
+    remainder = n - (i * group_length);
+    groups[group_count-1] = &list[(group_count-1)*group_length];
     merge_sort(groups[group_count-1], remainder);
     median_list[group_count-1] = groups[group_count-1][remainder/2];
 
-    medianOfMedians = LinearSelection(median_list, 5, 2);
+
+    medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
 
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
 
