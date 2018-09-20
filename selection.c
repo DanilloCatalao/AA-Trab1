@@ -52,3 +52,10 @@ int LinearSelection( int* list, int n, int k ){
     return 0;
 }
 
+int sortSelection(int *list, int n, int k) {
+    k -= 1;
+    merge_sort(list, n);
+
+    return list[k];
+}
+

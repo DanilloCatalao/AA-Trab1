@@ -21,6 +21,8 @@ int main(void){
     
     /* merge_sort(list, sizeof(list)/sizeof(int)); */
     printf("\n");
+    int a = sortSelection(list, sizeof(list)/sizeof(int), 2);
+    printf("a: %d\n", a);
     debug_show(list, sizeof(list)/sizeof(int)); 
     return 0;
 }
