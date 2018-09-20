@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "selection.h"
 #include "mergesort.h"
+#include "helper.h"
 
 int LinearSelection( int* list, int n, int k ){
     //Group the numbers into sets of 5
@@ -9,7 +10,7 @@ int LinearSelection( int* list, int n, int k ){
     int group_count;
     int medianOfMedians;
     int i, remainder;
-    int *median_list;
+    int *median_list, *above_median_list, *below_median_list;
     int **groups;
 
     // Caso base
@@ -24,17 +25,8 @@ int LinearSelection( int* list, int n, int k ){
 	group_count += 1;
     }
 
-    median_list = (int *) malloc(group_count * sizeof(int));
-    if(median_list == NULL) {
-	printf("Dynamic memory allocation error.\n");
-	exit(-1);
-    }
-
-    groups = (int **) malloc(group_count * sizeof(int*));
-    if(groups == NULL) {
-	printf("Dynamic memory allocation error.\n");
-	exit(-1);
-    }
+    groups = (int **) _malloc(group_count * sizeof(int*));
+    median_list = (int *) _malloc(group_count * sizeof(int));
 
     //Sort individual groups and find the median of each group; put these medians in a set M
     for(i = 0; i < group_count-1; i++) {
