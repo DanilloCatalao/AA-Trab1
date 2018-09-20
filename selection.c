@@ -47,10 +47,8 @@ int LinearSelection( int* list, int n, int k ){
     merge_sort(groups[group_count-1], remainder);
     median_list[group_count-1] = groups[group_count-1][remainder/2];
 
-
-    medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
-
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
+    medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
 
     //Partition original data around m’ such that values less than it are in set L and values greater than it are in set R
     //If sizeof(L) = k-1 return m'
