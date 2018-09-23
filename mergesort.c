@@ -22,7 +22,7 @@ void merge_sort(int *list, int n) {
 
 static int *merge(int *list1, int n1, int *list2, int n2) {
     int i, j, k;
-    int *remainder;
+    int *remainder = NULL;
     int remainder_size;
     int *result = (int *) malloc((n1 + n2) * sizeof(int));
     if(result == NULL) {

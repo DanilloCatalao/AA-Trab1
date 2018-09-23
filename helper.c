@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "helper.h"
 
 void debug_show(int *list, int n) {
     int i;
@@ -20,3 +20,10 @@ void *_malloc(size_t size) {
     return ptr;
 }
 
+void fillList(int * list, int size, int MAX) {
+	int i;
+	for (i = 0; i < size; i++) {
+		list[i] = rand() % MAX + 1; 
+	}
+	return;
+}
