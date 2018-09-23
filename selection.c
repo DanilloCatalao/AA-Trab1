@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "selection.h"
 #include "mergesort.h"
 #include "helper.h"
@@ -9,15 +10,22 @@ int LinearSelection( int* list, int n, int k ){
     int group_count;
     int medianOfMedians;
     int i, j, w, remainder;
+    int *list_copy;
     int *median_list, *above_median_list, *below_median_list;
     int **groups;
     int result;
 
+    list_copy = _malloc(n * sizeof(int));
+    memcpy(list_copy, list, n * sizeof(int));
+
     // Caso base
     if(n <= group_length) {
-	merge_sort(list, n);
+	merge_sort(list_copy, n);
 	k -= 1;
-	return list[k];
+	result = list_copy[k];
+	free(list_copy);
+
+	return result;
     }
 
     group_count = n / group_length;
@@ -31,7 +39,7 @@ int LinearSelection( int* list, int n, int k ){
     //Group the numbers into sets of 5
     //Sort individual groups and find the median of each group; put these medians in a set M
     for(i = 0; i < group_count-1; i++) {
-	groups[i] = &list[i * group_length];
+	groups[i] = &list_copy[i * group_length];
 	merge_sort(groups[i], group_length);
 	median_list[i] = groups[i][group_length/2];
     }
@@ -40,8 +48,13 @@ int LinearSelection( int* list, int n, int k ){
     merge_sort(groups[group_count-1], remainder);
     median_list[group_count-1] = groups[group_count-1][remainder/2];
 
+    free(groups);
+    free(list_copy);
+
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
     medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
+
+    free(median_list);
 
     above_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
     below_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
@@ -67,8 +80,6 @@ int LinearSelection( int* list, int n, int k ){
 	result = LinearSelection(above_median_list, w, k - j - 1);
     }
     
-    free(groups);
-    free(median_list);
     free(above_median_list);
     free(below_median_list);
 
