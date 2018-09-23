@@ -87,9 +87,16 @@ int LinearSelection( int* list, int n, int k ){
 }
 
 int sortSelection(int *list, int n, int k) {
-    k -= 1;
-    merge_sort(list, n);
+    int result;
+    int *list_copy = _malloc(n * sizeof(int));
+    memcpy(list_copy, list, n * sizeof(int));
 
-    return list[k];
+    merge_sort(list_copy, n);
+    k -= 1;
+    result = list_copy[k];
+
+    free(list_copy);
+
+    return result;
 }
 
