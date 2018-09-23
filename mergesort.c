@@ -3,7 +3,6 @@
 #include "mergesort.h"
 
 static int *merge(int *list1, int n1, int *list2, int n2);
-static void debug_show(int *list, int n);
 
 void merge_sort(int *list, int n) {
     int i;
