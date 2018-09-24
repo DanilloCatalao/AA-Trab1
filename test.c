@@ -21,7 +21,7 @@ void fullTest( int instance,int step, int iteration ) {
 	srand((unsigned int)time(NULL));
 	for (i = step; i <= step * iteration; i += step) {
 		fprintf(file, "N=%d\n", i);
-		for (j = 0; j < instance; j++) {
+		for (j = 0; j < 1; j++) {
 			index = (i / step) - 1;
 			lists[index] = (int*)malloc(i * sizeof(int));
 			fillList(lists[index], i, MAX_INT);
@@ -35,8 +35,8 @@ void fullTest( int instance,int step, int iteration ) {
 			end = clock();
 			sortSelectTime += ((double)(end - start)) / CLOCKS_PER_SEC;
 		}
-		linearSelectTime /= instance;
-		sortSelectTime /= instance;
+		//linearSelectTime /= instance;
+		//sortSelectTime /= instance;
 		fprintf(file, "Média Linear Selection : %.8f\n", linearSelectTime);
 		fprintf(file, "Média Sort Selection :   %.8f\n\n", sortSelectTime);
 	}
