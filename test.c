@@ -42,6 +42,9 @@ void fullTest( int instance,int step, int iteration ) {
 		linearSelectTime = 0;
 		sortSelectTime = 0;
 	}
-	
+	for (i = 0; i < instance; i++) {
+		free(lists[i]);
+	}
+	free(lists);
 	fclose(file);
 }
