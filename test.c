@@ -11,27 +11,25 @@ void fullTest( int instance,int step, int iteration ) {
 	int index;
 	double linearSelectTime = 0, sortSelectTime = 0;
 	int i,j = 0;
-	int **lists = NULL;
+	int *list = NULL;
 	FILE *file = NULL;
 
 	file = fopen("Resultado_testes.txt", "w");
 
-	lists = (int **)_malloc(instance * sizeof(int*));
-	
 	srand((unsigned int)time(NULL));
 	for (i = step; i <= step * iteration; i += step) {
 		fprintf(file, "N=%d\n", i);
 		for (j = 0; j < 1; j++) {
 			index = (i / step) - 1;
-			lists[index] = (int*)malloc(i * sizeof(int));
-			fillList(lists[index], i, MAX_INT);
+			list = (int*)malloc(i * sizeof(int));
+			fillList(list, i, MAX_INT);
 			start = clock();
-			LinearSelection(lists[index], i, i / 2);
+			LinearSelection(list, i, i / 2);
 			end = clock();
 			linearSelectTime += ((double)(end - start)) / CLOCKS_PER_SEC;
 
 			start = clock();
-			sortSelection(lists[index], i, i / 2);
+			sortSelection(list, i, i / 2);
 			end = clock();
 			sortSelectTime += ((double)(end - start)) / CLOCKS_PER_SEC;
 		}
@@ -42,9 +40,5 @@ void fullTest( int instance,int step, int iteration ) {
 		linearSelectTime = 0;
 		sortSelectTime = 0;
 	}
-	for (i = 0; i < instance; i++) {
-		free(lists[i]);
-	}
-	free(lists);
 	fclose(file);
 }
