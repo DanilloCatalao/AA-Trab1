@@ -23,7 +23,7 @@ int LinearSelection( int* list, int n, int k ){
 	merge_sort(list_copy, n);
 	k -= 1;
 	result = list_copy[k];
-	//free(list_copy);
+	free(list_copy);
 
 	return result;
     }
@@ -44,17 +44,18 @@ int LinearSelection( int* list, int n, int k ){
 	median_list[i] = groups[i][group_length/2];
     }
     remainder = n - (i * group_length);
-    groups[group_count-1] = &list[(group_count-1)*group_length];
+    groups[group_count-1] = &list_copy[(group_count-1)*group_length];
     merge_sort(groups[group_count-1], remainder);
     median_list[group_count-1] = groups[group_count-1][remainder/2];
 
-    //free(groups);
-    //free(list_copy);
+	free(list_copy);
+    free(groups);
+  
 
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
     medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
 
-    //free(median_list);
+    free(median_list);
 
     above_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
     below_median_list = (int *) _malloc(7 * n / 10 * sizeof(int));
@@ -80,8 +81,8 @@ int LinearSelection( int* list, int n, int k ){
 	result = LinearSelection(above_median_list, w, k - j - 1);
     }
 
-    //free(above_median_list);
-    //free(below_median_list);
+    free(above_median_list);
+    free(below_median_list);
 
     return result;
 }
