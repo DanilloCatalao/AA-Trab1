@@ -8,24 +8,37 @@
 void fullTest( int instance,int step, int iteration ) {
 	const int MAX_INT = 100000;
 	clock_t start, end;
-	double cpu_time_used;
 	int index;
+	double linearSelectTime = 0, sortSelectTime = 0;
 	int i,j = 0;
 	int **lists = NULL;
+	FILE *file = NULL;
+
+	file = fopen("Resultado_testes.txt", "w");
+
 	lists = (int **)_malloc(instance * sizeof(int*));
 	
 	srand((unsigned int)time(NULL));
 	for (i = step; i <= step * iteration; i += step) {
-		index = (i / step) - 1;
-		lists[index] = (int*)malloc(i * sizeof(int));
-		fillList(lists[index], i, MAX_INT);
-		start = clock();
-		LinearSelection(lists[index], i, i / 2);
-		end = clock();
-		cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-		printf("listSize: %d Time: %f\n", i, cpu_time_used);
+		fprintf(file, "N=%d\n", i);
+		for (j = 0; j < instance; j++) {
+			index = (i / step) - 1;
+			lists[index] = (int*)malloc(i * sizeof(int));
+			fillList(lists[index], i, MAX_INT);
+			start = clock();
+			LinearSelection(lists[index], i, i / 2);
+			end = clock();
+			linearSelectTime += ((double)(end - start)) / CLOCKS_PER_SEC;
 
-
-		printf("ls : %d\n", LinearSelection(lists[0], 300, 1));
+			start = clock();
+			sortSelection(lists[index], i, i / 2);
+			end = clock();
+			sortSelectTime += ((double)(end - start)) / CLOCKS_PER_SEC;
+		}
+		linearSelectTime /= instance;
+		sortSelectTime /= instance;
+		fprintf(file, "Média Linear Selection : %.8f\n", linearSelectTime);
+		fprintf(file, "Média Sort Selection :   %.8f\n\n", sortSelectTime);
 	}
+	fclose(file);
 }

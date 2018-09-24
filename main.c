@@ -18,17 +18,8 @@ int main(void){
     merge_sort(list, sizeof(list)/sizeof(int));
     //debug_show(list, 25);
 	*/
-	//fullTest(10, 1000, 10);
-	int i = 0;
-	int list[1000];
-	int result;
-	srand((unsigned int)time(NULL));
-	fillList(list,1000,100000);
-	
-	result = LinearSelection(list, 999, 2);
-	
-	printf("\n");
-	printf("result %d\n", result);
+
+	fullTest(10, 1000, 10);
 
     /*printf("\n");*/
     /*int a = sortSelection(list, sizeof(list)/sizeof(int), 2);*/
