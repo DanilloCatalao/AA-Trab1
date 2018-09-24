@@ -12,7 +12,7 @@ int LinearSelection( int* list, int n, int k ){
     int i, j, w, remainder;
     int *list_copy;
     int *median_list, *above_median_list, *below_median_list;
-    int **groups;
+    int *group;
     int result;
 
     list_copy = _malloc(n * sizeof(int));
@@ -33,24 +33,21 @@ int LinearSelection( int* list, int n, int k ){
 	group_count += 1;
     }
 
-    groups = (int **) _malloc(group_count * sizeof(int*));
     median_list = (int *) _malloc(group_count * sizeof(int));
 
     //Group the numbers into sets of 5
     //Sort individual groups and find the median of each group; put these medians in a set M
     for(i = 0; i < group_count-1; i++) {
-	groups[i] = &list_copy[i * group_length];
-	merge_sort(groups[i], group_length);
-	median_list[i] = groups[i][group_length/2];
+	group = &list_copy[i * group_length];
+	merge_sort(group, group_length);
+	median_list[i] = group[group_length/2];
     }
     remainder = n - (i * group_length);
-    groups[group_count-1] = &list_copy[(group_count-1)*group_length];
-    merge_sort(groups[group_count-1], remainder);
-    median_list[group_count-1] = groups[group_count-1][remainder/2];
+    group = &list_copy[(group_count-1)*group_length];
+    merge_sort(group, remainder);
+    median_list[group_count-1] = group[remainder/2];
 
-	free(list_copy);
-    free(groups);
-  
+    free(list_copy);
 
     //Find median m’ of set M using LinearSelection(M,sizeof(M))
     medianOfMedians = LinearSelection(median_list, group_count, group_count / 2);
