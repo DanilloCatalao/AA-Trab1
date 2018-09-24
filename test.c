@@ -39,6 +39,9 @@ void fullTest( int instance,int step, int iteration ) {
 		//sortSelectTime /= instance;
 		fprintf(file, "Média Linear Selection : %.8f\n", linearSelectTime);
 		fprintf(file, "Média Sort Selection :   %.8f\n\n", sortSelectTime);
+		linearSelectTime = 0;
+		sortSelectTime = 0;
 	}
+	
 	fclose(file);
 }
