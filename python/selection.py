@@ -1,6 +1,9 @@
 import time
 import random
 
+class InputError(Exception):
+    pass
+
 def merge(_list1, _list2):
     i = 0
     j = 0
@@ -37,6 +40,9 @@ def merge_sort(_list):
     return result
 
 def linear_selection(_list, k):
+    if k < 0 or k > len(_list):
+        raise InputError()
+
     group_length = 5
     if len(_list) <= group_length:
         _list = merge_sort(_list)
@@ -87,9 +93,9 @@ def random_list(size):
 
     return _list
 
-if __name__ == "__main__":
+def main():
     f = open("relatorio.txt", "w")
-    for n in xrange(1000, 51000, 1000):
+    for n in xrange(1000, 11000, 1000):
         k = n / 2
         linear_average = 0
         sort_average = 0
@@ -109,4 +115,7 @@ if __name__ == "__main__":
         f.write("linear: {}\n".format(linear_average))
         f.write("sort: {}\n".format(sort_average))
     f.close()
+
+if __name__ == "__main__":
+    main()
 
