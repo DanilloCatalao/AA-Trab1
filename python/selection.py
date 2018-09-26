@@ -1,8 +1,16 @@
 import time
 import random
+import unittest
 
 class InputError(Exception):
     pass
+
+class TestSelection(unittest.TestCase):
+    def test(self):
+        self.assertEqual(linear_selection([1, 4, 3, 2, 2, 4, 5], 2), 2)
+        self.assertEqual(linear_selection([1, 1, 1, 3, 2], 1), 1)
+        self.assertEqual(linear_selection([4, 3, 10, 2, 1, 2, 4, 12, 7], 5), 4)
+        self.assertEqual(linear_selection([1, 2, 2, 2, 1, 2, 1, 3], 8), 3)
 
 def merge(_list1, _list2):
     i = 0
@@ -65,18 +73,21 @@ def linear_selection(_list, k):
     median = linear_selection(median_list, len(median_list) / 2)
     below_median = []
     above_median = []
+    equal_median = -1
     for element in _list:
         if element < median:
             below_median.append(element)
-        else:
+        elif element > median:
             above_median.append(element)
+        else:
+            equal_median += 1
 
     if len(below_median) == k - 1:
         return median
     elif len(below_median) > k - 1:
-        return linear_selection(below_median, k)
+        return linear_selection(below_median, k - equal_median)
     else:
-        return linear_selection(above_median, k - len(below_median) - 1)
+        return linear_selection(above_median, k - len(below_median) - 1 - equal_median)
 
 def sort_selection(_list, k):
     _list = merge_sort(_list)
@@ -117,5 +128,6 @@ def main():
     f.close()
 
 if __name__ == "__main__":
+    #  unittest.main()
     main()
 
