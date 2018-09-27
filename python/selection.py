@@ -11,6 +11,12 @@ class TestSelection(unittest.TestCase):
         self.assertEqual(linear_selection([1, 1, 1, 3, 2], 1), 1)
         self.assertEqual(linear_selection([4, 3, 10, 2, 1, 2, 4, 12, 7], 5), 4)
         self.assertEqual(linear_selection([1, 2, 2, 2, 1, 2, 1, 3], 8), 3)
+        self.assertEqual(linear_selection([1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3], 2), 2)
+        self.assertEqual(linear_selection([2, 2, 2, 1, 2, 2, 2, 3, 2, 2, 3], 6), 2)
+        for _ in xrange(1000):
+            k = random.randint(1, 1000)
+            _list = random_list(1000)
+            self.assertEqual(linear_selection(_list, k), sort_selection(_list, k))
 
 def merge(_list1, _list2):
     i = 0
@@ -82,10 +88,10 @@ def linear_selection(_list, k):
         else:
             equal_median += 1
 
-    if len(below_median) == k - 1:
+    if k - 1 >= len(below_median) and k - 1 <= len(below_median) + equal_median:
         return median
     elif len(below_median) > k - 1:
-        return linear_selection(below_median, k - equal_median)
+        return linear_selection(below_median, k)
     else:
         return linear_selection(above_median, k - len(below_median) - 1 - equal_median)
 
@@ -128,6 +134,6 @@ def main():
     f.close()
 
 if __name__ == "__main__":
-    #  unittest.main()
+    # unittest.main()
     main()
 
