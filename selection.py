@@ -111,9 +111,10 @@ def random_list(size):
     return _list
 
 def main():
+    """
     f = open("relatorio.txt", "w")
     f.write("n;linear selection;sort selection\n")
-    for n in xrange(1000, 200000, 1000):
+    for n in xrange(1000, 10000, 1000):
         k = n / 2
         linear_average = 0
         sort_average = 0
@@ -133,7 +134,15 @@ def main():
         f.write("{};".format(linear_average))
         f.write("{}\n".format(sort_average))
     f.close()
-
+    """	
+    file = open("entrada.txt","r")
+    _list = []
+    k = int(file.readline())
+    for line in file:
+        _list.append(int(line))
+    print(linear_selection(_list,k))
+    file.close()    	
+	
 if __name__ == "__main__":
     # unittest.main()
     main()
