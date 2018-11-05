@@ -12,6 +12,23 @@ class Graph:
 
         self.edge_dict[node] = edge_list
 
+    def bfs(self, initial_node):
+        level_list = []
+        visited_list = []
+        level_list.append([initial_node])
+        visited_list.append(initial_node)
+
+        while level_list[-1] != []:
+            new_level = []
+            for node in level_list[-1]:
+                for neighbor in self.edge_dict[node]:
+                    if neighbor not in visited_list:
+                        new_level.append(neighbor)
+                        visited_list.append(neighbor)
+            level_list.append(new_level)
+
+        return visited_list
+
     def dfs(self, initial_node):
         visited_list = []
         others = self.node_list.copy()
@@ -76,6 +93,7 @@ def create_board():
 def generate_state_graph(initial_board):
     board_graph = Graph.create_from_board(initial_board)
     print(board_graph.dfs(None))
+    print(board_graph.bfs(None))
 
 def main():
     board = create_board()
