@@ -46,6 +46,15 @@ class Graph:
            if neighbor not in visited_list:
                self._dfs_visit(neighbor, visited_list)
 
+    def swap_nodes(self, node_1, node_2):
+        self.edge_list[node_1], self.edge_list[node_2] = self.edge_list[node_2], self.edge_list[node_1]
+
+    def copy(self):
+        clone = Graph()
+        clone.node_list = self.node_list.copy()
+        clone.edge_dict = self.edge_dict.copy()
+
+        return clone
 
     @staticmethod
     def create_from_board(board):
@@ -91,9 +100,11 @@ def create_board():
     return board
 
 def generate_state_graph(initial_board):
+    state_graph = Graph()
     board_graph = Graph.create_from_board(initial_board)
-    print(board_graph.dfs(None))
-    print(board_graph.bfs(None))
+
+def _alguma_coisa(self, graph):
+    visited_list = graph.bfs(None)
 
 def main():
     board = create_board()
