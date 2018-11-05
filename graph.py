@@ -12,6 +12,24 @@ class Graph:
 
         self.edge_dict[node] = edge_list
 
+    def dfs(self, initial_node):
+        visited_list = []
+        others = self.node_list.copy()
+        others.remove(initial_node)
+        self._dfs_visit(initial_node, visited_list)
+        for node in others:
+            if node not in visited_list:
+                self._dfs_visit(node, visited_list)
+
+        return visited_list
+
+    def _dfs_visit(self, node, visited_list):
+       visited_list.append(node)
+       for neighbor in self.edge_dict[node]:
+           if neighbor not in visited_list:
+               self._dfs_visit(neighbor, visited_list)
+
+
     @staticmethod
     def create_from_board(board):
         board_graph = Graph()
@@ -55,11 +73,14 @@ def create_board():
 
     return board
 
+def generate_state_graph(initial_board):
+    board_graph = Graph.create_from_board(initial_board)
+    print(board_graph.dfs(None))
+
 def main():
     board = create_board()
     print(board)
-    board_graph = Graph.create_from_board(board)
-    print(board_graph.edge_dict)
+    generate_state_graph(board)
 
 if __name__ == '__main__':
     main()
